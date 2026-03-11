@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Imshal!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;1,700&family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --gold: #d4af37;
+            --rose: #e91e63;
+            --dark: #0a0a0a;
+        }
+
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--dark);
+            color: white;
+            font-family: 'Playfair Display', serif;
+            overflow-x: hidden;
+            height: 100%;
+        }
+
+        /* --- STAGE 1: THE TEASE --- */
+        #intro-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1.5s ease;
+        }
+
+        .formal-name {
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            color: var(--gold);
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 2s ease;
+        }
+
+        .btn-start {
+            margin-top: 30px;
+            padding: 15px 40px;
+            border: 1px solid var(--gold);
+            background: transparent;
+            color: var(--gold);
+            cursor: pointer;
+            font-family: serif;
+            letter-spacing: 2px;
+            transition: 0.3s;
+        }
+
+        .btn-start:hover { background: var(--gold); color: black; }
+
+        /* --- STAGE 2: THE REVEAL --- */
+        #main-content {
+            display: none;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero-text {
+            font-size: 5rem;
+            font-family: 'Dancing Script', cursive;
+            background: linear-gradient(45deg, #fff, var(--gold), var(--rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .urdu-text {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 2.5rem;
+            margin: 40px 0;
+            line-height: 2;
+            color: white;
+        }
+
+        .card-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            color: var(--rose);
+            font-size: 20px;
+            pointer-events: none;
+            animation: float 4s linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro-overlay">
+        <div id="full-name" class="formal-name">
+            IMSHAL FATIMA SAJID FAROOQ WARAICH
+        </div>
+        <button class="btn-start" onclick="startExperience()">FOR THE BIRTHDAY GIRL</button>
+    </div>
+
+    <div id="main-content">
+        <h1 class="hero-text">Happy Birthday, Imshal!</h1>
+        
+        <div class="urdu-text">
+            میری دنیا، میری خوشی <br>
+            اللہ تمہیں ڈھیروں خوشیاں دے
+        </div>
+
+        <div class="card-container">
+            <h3>March 12th, 2026</h3>
+            <p style="font-style: italic; font-size: 1.2rem;">
+                "Even though the miles are between us right now, every mile is just a reminder of how much you mean to me."
+            </p>
+            <p>— ❤️ —</p>
+        </div>
+        
+        <p style="color: grey; margin-top: 100px;">(P.S. I still think your full name is a bit long... 😉)</p>
+    </div>
+
+    <script>
+        function startExperience() {
+            // 1. Play "Beep" or Sound (Modern browsers require user click)
+            const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-30.mp3');
+            audio.play();
+
+            // 2. Show the "Full Name" Tease first
+            const nameDiv = document.getElementById('full-name');
+            nameDiv.style.opacity = '1';
+            nameDiv.style.transform = 'translateY(0)';
+
+            setTimeout(() => {
+                // 3. Fade out the intro
+                document.getElementById('intro-overlay').style.opacity = '0';
+                
+                setTimeout(() => {
+                    document.getElementById('intro-overlay').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+                    
+                    // 4. Trigger Celebration
+                    celebrate();
+                }, 1500);
+            }, 3000);
+        }
+
+        function celebrate() {
+            // Confetti Burst
+            var duration = 15 * 1000;
+            var animationEnd = Date.now() + duration;
+            var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            var interval = setInterval(function() {
+                var timeLeft = animationEnd - Date.now();
+                if (timeLeft <= 0) return clearInterval(interval);
+
+                var particleCount = 50 * (timeLeft / duration);
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+                confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+            }, 250);
+
+            // Floating Hearts loop
+            setInterval(createHeart, 300);
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+    </script>
+</body>
+</html>
